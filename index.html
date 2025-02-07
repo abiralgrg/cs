@@ -1,59 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Minimalist Card</title>
     <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+            background-color: #F3EDE4;
+            font-family: 'Arial', sans-serif;
         }
-        .container {
-            width: 60%;
+
+        .card {
+            width: 400px;
+            background: #fff;
+            border: 2px solid #1D3557; /* Navy */
+            padding: 20px;
+            position: relative;
             text-align: left;
         }
-        .header {
-            background-color: #302c34;
-            color: white;
-            padding: 20px;
-            font-size: 3em;
-            font-weight: bold;
+
+        .navy-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background-color: #1D3557; /* Navy */
+            border-radius: 50%;
         }
-        .body-text {
+
+        .text-section {
+            padding: 10px 0;
+        }
+
+        .title {
             font-size: 1.2em;
+            font-weight: bold;
+            color: #1D3557; /* Navy */
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .description {
+            font-size: 0.9em;
             color: #333;
-            margin-top: 20px;
+            margin-top: 5px;
+            line-height: 1.5;
+            transition: 0.3s;
         }
-        .cta {
-            display: inline-block;
-            margin-top: 20px;
-            font-size: 1em;
-            color: #302c34;
-            text-decoration: none;
-            border-bottom: 1px solid #302c34;
-            padding-bottom: 2px;
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            text-align: center;
         }
-        .cta:hover {
-            border-bottom: 1px solid transparent;
+
+        .grid button {
+            border: 1px solid #1D3557; /* Navy */
+            padding: 10px;
+            font-size: 0.8em;
+            text-align: center;
+            text-transform: uppercase;
+            color: #1D3557; /* Navy */
+            background: none;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        .grid button:hover {
+            background: #1D3557;
+            color: white;
+        }
+
+        .grid button span {
+            display: block;
+            font-size: 0.7em;
+            color: #333;
+            text-transform: lowercase;
+        }
+
+        .grid button:hover span {
+            color: white;
+        }
+
+        /* House M.D. Section */
+        .house-md {
+            display: none;
+            border: 2px solid #1D3557;
+            padding: 10px;
+            position: relative;
+        }
+
+        .house-md img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .house-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .house-caption {
+            font-size: 0.8em;
+            color: #333;
+            font-style: italic;
+            width: 60%;
+        }
+
+        .house-buttons {
+            width: 40%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .house-buttons button {
+            border: 1px solid #1D3557;
+            padding: 5px;
+            font-size: 0.7em;
+            text-align: center;
+            text-transform: uppercase;
+            color: #1D3557;
+            background: none;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 3px;
+        }
+
+        .house-buttons button:hover {
+            background: #1D3557;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">Hello.</div>
-        <p class="body-text">
-            I'm a multi-award-winning interface developer highly skilled in HTML, CSS, and JavaScript. 
-            I possess a designer’s artistic eye and a programmer’s logical mind. This ensures that my websites are accessible, 
-            fun to use, and beautiful.
-        </p>
-        <a href="mailto:example@email.com" class="cta">Get in touch</a>
+
+    <div class="card">
+        <div class="navy-dot"></div>
+
+        <div class="text-section">
+            <div id="title" class="title">Hello. My name is Abiral.</div>
+            <p id="description" class="description">
+                Bumbling through brush, my botanical escapade continues, snagged on leaves but hey—more crafting supplies. Jackpot.
+            </p>
+
+            <!-- House M.D. Section -->
+            <div id="house-md" class="house-md">
+                <img src="https://i.ibb.co/SDnr0DfB/Runway-2023-11-11-T23-58-51-435-Z-Expand-Image.jpg" alt="House M.D.">
+                <div class="house-info">
+                    <p class="house-caption">
+                        House M.D. follows the sarcastic, brilliant Dr. Gregory House as he solves medical mysteries.
+                    </p>
+                    <div class="house-buttons">
+                        <button onclick="window.location.reload();">Back</button>
+                        <button onclick="updateContent('More Shows', 'Check out more recommendations.')">More</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <button onclick="window.location.reload();">
+                    About <span>back to the start</span>
+                </button>
+                <button onclick="showHouseMD()">
+                    Good Shows <span>like house</span>
+                </button>
+                <button onclick="updateContent('ILL HELP YOU', 'pay me 5 quid ill teach you cs for a while')">
+                    PAY ME <span>i can teach cs</span>
+                </button>
+                <button onclick="updateContent('Revision Materials', 'Need study notes? I have them for GCSE and beyond.')">
+                    Revision Stuff <span>if you need them</span>
+                </button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function updateContent(title, description) {
+            document.getElementById("title").innerText = title;
+            document.getElementById("description").innerText = description;
+            document.getElementById("house-md").style.display = "none";
+        }
+
+        function showHouseMD() {
+            document.getElementById("title").innerText = "House M.D.";
+            document.getElementById("description").innerText = "";
+            document.getElementById("house-md").style.display = "block";
+        }
+    </script>
+
 </body>
 </html>
