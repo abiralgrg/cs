@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Card</title>
+    <title>Minimalist Grid</title>
     <style>
-        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -24,192 +23,133 @@
         .card {
             width: 400px;
             background: #fff;
-            border: 2px solid #1D3557; /* Navy */
+            border: 2px solid #1D3557; 
             padding: 20px;
-            position: relative;
             text-align: left;
         }
 
-        .navy-dot {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            background-color: #1D3557; /* Navy */
-            border-radius: 50%;
-        }
-
         .text-section {
-            padding: 10px 0;
+            padding: 0; 
         }
 
         .title {
             font-size: 1.2em;
             font-weight: bold;
-            color: #1D3557; /* Navy */
+            color: #1D3557; 
             text-transform: uppercase;
-            transition: 0.3s;
+            margin-bottom: 10px;
         }
 
         .description {
             font-size: 0.9em;
             color: #333;
-            margin-top: 5px;
             line-height: 1.5;
-            transition: 0.3s;
+            margin-bottom: 15px; 
         }
 
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-            text-align: center;
+            grid-template-columns: repeat(2, 1fr);
+            border: 1px solid #1D3557; 
         }
 
-        .grid button {
-            border: 1px solid #1D3557; /* Navy */
+        .grid div {
+            border: 1px solid #1D3557; 
+            border-left: none; 
+            border-top: none; 
             padding: 10px;
-            font-size: 0.8em;
             text-align: center;
-            text-transform: uppercase;
-            color: #1D3557; /* Navy */
-            background: none;
             cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-            border-radius: 3px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
-        .grid button:hover {
-            background: #1D3557;
-            color: white;
+        .grid div:nth-child(1),
+        .grid div:nth-child(2) {
+            border-top: 1px solid #1D3557;
         }
 
-        .grid button span {
-            display: block;
-            font-size: 0.7em;
-            color: #333;
+        .grid div:nth-child(odd) {
+            border-left: 1px solid #1D3557;
+        }
+
+        .grid div h3 {
+            font-size: 0.9em;
+            color: #1D3557; 
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .grid div span {
+            font-size: 0.8em;
+            color: #555;
             text-transform: lowercase;
         }
 
-        .grid button:hover span {
-            color: white;
-        }
-
-        /* House M.D. Section */
-        .house-md {
+        /* Fullscreen image styles */
+        .fullscreen {
             display: none;
-            border: 2px solid #1D3557;
-            padding: 10px;
-            position: relative;
-        }
-
-        .house-md img {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-radius: 5px;
+            height: 100%;
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
 
-        .house-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
+        .fullscreen img {
+            max-width: 100%;
+            max-height: 100%;
         }
-
-        .house-caption {
-            font-size: 0.8em;
-            color: #333;
-            font-style: italic;
-            width: 60%;
-        }
-
-        .house-buttons {
-            width: 40%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5px;
-        }
-
-        .house-buttons button {
-            border: 1px solid #1D3557;
-            padding: 5px;
-            font-size: 0.7em;
-            text-align: center;
-            text-transform: uppercase;
-            color: #1D3557;
-            background: none;
-            cursor: pointer;
-            transition: 0.2s;
-            border-radius: 3px;
-        }
-
-        .house-buttons button:hover {
-            background: #1D3557;
-            color: white;
-        }
-
     </style>
 </head>
 <body>
-
     <div class="card">
-        <div class="navy-dot"></div>
-
-        <div class="text-section">
-            <div id="title" class="title">Hello. My name is Abiral.</div>
-            <p id="description" class="description">
-                Bumbling through brush, my botanical escapade continues, snagged on leaves but hey—more crafting supplies. Jackpot.
+        <div id="about-section" class="text-section">
+            <div class="title">Hello. My name is Abiral.</div>
+            <p class="description">
+                Bumbling through brush my botanical escapade continues, snagged on leaves but hey more crafting supplies jackpot.
             </p>
-
-            <!-- House M.D. Section -->
-            <div id="house-md" class="house-md">
-                <img src="https://i.ibb.co/SDnr0DfB/Runway-2023-11-11-T23-58-51-435-Z-Expand-Image.jpg" alt="House M.D.">
-                <div class="house-info">
-                    <p class="house-caption">
-                        House M.D. follows the sarcastic, brilliant Dr. Gregory House as he solves medical mysteries.
-                    </p>
-                    <div class="house-buttons">
-                        <button onclick="window.location.reload();">Back</button>
-                        <button onclick="updateContent('More Shows', 'Check out more recommendations.')">More</button>
-                    </div>
-                </div>
-            </div>
-
             <div class="grid">
-                <button onclick="window.location.reload();">
-                    About <span>back to the start</span>
-                </button>
-                <button onclick="showHouseMD()">
-                    Good Shows <span>like house</span>
-                </button>
-                <button onclick="updateContent('ILL HELP YOU', 'pay me 5 quid ill teach you cs for a while')">
-                    PAY ME <span>i can teach cs</span>
-                </button>
-                <button onclick="updateContent('Revision Materials', 'Need study notes? I have them for GCSE and beyond.')">
-                    Revision Stuff <span>if you need them</span>
-                </button>
+                <div onclick="navigateToSection('about')">
+                    <h3>About</h3>
+                    <span>back to start</span>
+                </div>
+                <div onclick="navigateToSection('good-shows')">
+                    <h3>Good Shows</h3>
+                    <span>like house</span>
+                </div>
+                <div onclick="navigateToSection('revision')">
+                    <h3>Revision Stuff</h3>
+                    <span>if u need</span>
+                </div>
+                <div onclick="navigateToSection('tutoring')">
+                    <h3>Pay Me</h3>
+                    <span>i can teach cs</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        function updateContent(title, description) {
-            document.getElementById("title").innerText = title;
-            document.getElementById("description").innerText = description;
-            document.getElementById("house-md").style.display = "none";
-        }
+    <div class="fullscreen" id="fullscreen">
+        <img src="https://i.pinimg.com/originals/da/82/2d/da822d9047f7af84fc16b4907a62d374.jpg" alt="Massive Image">
+    </div>
 
-        function showHouseMD() {
-            document.getElementById("title").innerText = "House M.D.";
-            document.getElementById("description").innerText = "";
-            document.getElementById("house-md").style.display = "block";
+    <script>
+        function navigateToSection(section) {
+            if (section === 'good-shows') {
+                // Hide everything else
+                document.querySelector('.card').style.display = 'none';
+
+                // Show fullscreen image
+                const fullscreenDiv = document.getElementById('fullscreen');
+                fullscreenDiv.style.display = 'flex';
+            } else {
+                alert(`Navigating to ${section}!`);
+                // Replace this alert with your navigation logic.
+            }
         }
     </script>
-
 </body>
 </html>
