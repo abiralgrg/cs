@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Grid</title>
+    <title>Abiral's CS Tutoring</title>
     <style>
         * {
             margin: 0;
@@ -15,140 +15,247 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #F3EDE4;
             font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 500px;
         }
 
         .card {
-            width: 400px;
             background: #fff;
-            border: 2px solid #1D3557; 
-            padding: 20px;
+            border: 2px solid #1D3557;
+            box-shadow: 8px 8px 0px rgba(29, 53, 87, 0.2);
+            padding: 25px;
             text-align: left;
+            margin-bottom: 30px;
+            border-radius: 0; 
         }
 
         .text-section {
-            padding: 0; 
+            padding: 0;
+            margin-bottom: 20px;
         }
 
         .title {
-            font-size: 1.2em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #1D3557; 
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1D3557;
+            padding-bottom: 8px;
         }
 
         .description {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #333;
-            line-height: 1.5;
-            margin-bottom: 15px; 
+            line-height: 1.6;
+            margin-bottom: 20px; 
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            border: 1px solid #1D3557; 
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
         }
 
-        .grid div {
-            border: 1px solid #1D3557; 
-            border-left: none; 
-            border-top: none; 
-            padding: 10px;
+        .tab {
+            flex: 1;
             text-align: center;
+            padding: 12px;
+            background-color: #f8f8f8;
             cursor: pointer;
+            border: 1px solid #1D3557;
+            color: #1D3557;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            border-radius: 0;
         }
 
-        .grid div:nth-child(1),
-        .grid div:nth-child(2) {
-            border-top: 1px solid #1D3557;
+        .tab.active {
+            background-color: #1D3557;
+            color: white;
         }
 
-        .grid div:nth-child(odd) {
-            border-left: 1px solid #1D3557;
+        .tab:hover:not(.active) {
+            background-color: #E6F3FF;
         }
 
-        .grid div h3 {
-            font-size: 0.9em;
-            color: #1D3557; 
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .grid div span {
-            font-size: 0.8em;
-            color: #555;
-            text-transform: lowercase;
-        }
-
-        /* Fullscreen image styles */
-        .fullscreen {
+        .section {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
         }
 
-        .fullscreen img {
-            max-width: 100%;
-            max-height: 100%;
+        .section.active {
+            display: block;
+        }
+
+        .course-list {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+        .course-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            background-color: #f8f8f8;
+            border-left: 3px solid #1D3557;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .course-list li:hover {
+            background-color: #E6F3FF;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background-color: #1D3557;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 0;
+            font-size: 0.8em;
+            margin-left: 5px;
+            float: right;
+        }
+
+        .subject-info {
+            display: none;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 3px solid #1D3557;
+            margin-bottom: 20px;
+        }
+
+        .subject-info.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #1D3557;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.8em;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div id="about-section" class="text-section">
-            <div class="title">Hello. My name is Abiral.</div>
-            <p class="description">
-                Bumbling through brush my botanical escapade continues, snagged on leaves but hey more crafting supplies jackpot.
-            </p>
-            <div class="grid">
-                <div onclick="navigateToSection('about')">
-                    <h3>About</h3>
-                    <span>back to start</span>
+    <div class="main-container">
+        <div class="card">
+            <div class="text-section">
+                <div class="title">Hello. My name is Abiral.</div>
+                <p class="description"></p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showSection('tuition')">Tutoring</div>
+                <div class="tab" onclick="showSection('pricing')">Pricing</div>
+            </div>
+
+            <div id="tuition-section" class="section active">
+                <p class="description">
+                    I'll teach you stuff if u pay me.
+                </p>
+                <ul class="course-list">
+                    <li onclick="showSubject('cs')">Computer Science</li>
+                    <li onclick="showSubject('history')">History</li>
+                    <li onclick="showSubject('physics')">Physics</li>
+                    <li onclick="showSubject('chemistry')">Chemistry</li>
+                    <li onclick="showSubject('maths')">Maths</li>
+                    <li onclick="showSubject('english')">English</li>
+                </ul>
+
+                <div id="cs-info" class="subject-info">
+                    <h3>Computer Science</h3>
+                    <p>dont worry im very good at it</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
                 </div>
-                <div onclick="navigateToSection('good-shows')">
-                    <h3>Good Shows</h3>
-                    <span>like house</span>
+
+                <div id="history-info" class="subject-info">
+                    <h3>History</h3>
+                    <p>ill go through exam technique</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
                 </div>
-                <div onclick="navigateToSection('revision')">
-                    <h3>Revision Stuff</h3>
-                    <span>if u need</span>
+
+                <div id="physics-info" class="subject-info">
+                    <h3>Physics</h3>
+                    <p>ill go through exam technique</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
                 </div>
-                <div onclick="navigateToSection('tutoring')">
-                    <h3>Pay Me</h3>
-                    <span>i can teach cs</span>
+
+                <div id="chemistry-info" class="subject-info">
+                    <h3>Chemistry</h3>
+                    <p>ill go through exam technique</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
                 </div>
+
+                <div id="maths-info" class="subject-info">
+                    <h3>Maths</h3>
+                    <p>i can teach you whatever, if your already grade 9 i dont think i can do much for you</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
+                </div>
+
+                <div id="english-info" class="subject-info">
+                    <h3>English</h3>
+                    <p>i can teach you whatever, if your already grade 9 i dont think i can do much for you</p>
+                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
+                </div>
+            </div>
+
+            <div id="pricing-section" class="section">
+                <p class="description">
+                    If ur a friend I'll give you a free first session but past that you gotta pay mate.
+                </p>
+                <ul class="course-list">
+                    <li>Me just explaining stuff <span class="price-tag">£10/hr</span></li>
+                    <li>Small group sessions <span class="price-tag">£5/hr</span></li>
+                </ul>
             </div>
         </div>
     </div>
 
-    <div class="fullscreen" id="fullscreen">
-        <img src="https://i.pinimg.com/originals/da/82/2d/da822d9047f7af84fc16b4907a62d374.jpg" alt="Massive Image">
-    </div>
-
     <script>
-        function navigateToSection(section) {
-            if (section === 'good-shows') {
-                // Hide everything else
-                document.querySelector('.card').style.display = 'none';
-
-                // Show fullscreen image
-                const fullscreenDiv = document.getElementById('fullscreen');
-                fullscreenDiv.style.display = 'flex';
+        function showSection(sectionName) {
+            document.getElementById('tuition-section').classList.remove('active');
+            document.getElementById('pricing-section').classList.remove('active');
+            
+            document.getElementById(sectionName + '-section').classList.add('active');
+            
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if (sectionName === 'tuition') {
+                tabs[0].classList.add('active');
             } else {
-                alert(`Navigating to ${section}!`);
-                // Replace this alert with your navigation logic.
+                tabs[1].classList.add('active');
             }
+
+            hideSubjectInfo();
+        }
+
+        function showSubject(subjectName) {
+            const subjectInfos = document.querySelectorAll('.subject-info');
+            subjectInfos.forEach(info => info.classList.remove('active'));
+
+            document.querySelector('.course-list').style.display = 'none';
+            
+            document.getElementById(subjectName + '-info').classList.add('active');
+        }
+
+        function hideSubjectInfo() {
+            const subjectInfos = document.querySelectorAll('.subject-info');
+            subjectInfos.forEach(info => info.classList.remove('active'));
+            
+            document.querySelector('.course-list').style.display = 'block';
         }
     </script>
 </body>
