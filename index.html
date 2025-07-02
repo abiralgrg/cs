@@ -1,262 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abiral's CS Tutoring</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abiral Gurung | GCSE Tutoring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #1D3557;
+      --accent-light: #2A4B7A;
+      --bg: #FFFFFF;
+      --text: #2D3748;
+      --light-gray: #F7FAFC;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #F3EDE4;
-            font-family: 'Arial', sans-serif;
-            padding: 20px;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .main-container {
-            width: 100%;
-            max-width: 500px;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .card {
-            background: #fff;
-            border: 2px solid #1D3557;
-            box-shadow: 8px 8px 0px rgba(29, 53, 87, 0.2);
-            padding: 25px;
-            text-align: left;
-            margin-bottom: 30px;
-            border-radius: 0; 
-        }
+    /* Navigation */
+    .minimal-nav {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+    }
 
-        .text-section {
-            padding: 0;
-            margin-bottom: 20px;
-        }
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      background: rgba(29, 53, 87, 0.2);
+      border-radius: 50%;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
 
-        .title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #1D3557; 
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #1D3557;
-            padding-bottom: 8px;
-        }
+    .nav-dot::after {
+      content: attr(data-section);
+      position: absolute;
+      left: 24px;
+      top: -6px;
+      font-size: 13px;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 500;
+    }
 
-        .description {
-            font-size: 0.95em;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 20px; 
-        }
+    .nav-dot:hover::after,
+    .nav-dot.active::after {
+      opacity: 1;
+    }
 
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-        }
+    .nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.4);
+    }
 
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            background-color: #f8f8f8;
-            cursor: pointer;
-            border: 1px solid #1D3557;
-            color: #1D3557;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            border-radius: 0;
-        }
+    /* Sections */
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem;
+      scroll-margin-top: 60px;
+    }
 
-        .tab.active {
-            background-color: #1D3557;
-            color: white;
-        }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-        .tab:hover:not(.active) {
-            background-color: #E6F3FF;
-        }
+    /* Typography */
+    h1, h2, h3 {
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--accent);
+    }
 
-        .section {
-            display: none;
-        }
+    h1 { font-size: 2.5rem; margin-bottom: 1.75rem; }
+    h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+    p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 
-        .section.active {
-            display: block;
-        }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .course-list {
-            list-style-type: none;
-            margin-bottom: 20px;
-        }
+    .hero h1 {
+      color: white;
+      font-weight: 400;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
 
-        .course-list li {
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            font-size: 0.9em;
-            background-color: #f8f8f8;
-            border-left: 3px solid #1D3557;
-            border-radius: 0;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      opacity: 0.9;
+      font-size: 1.3rem;
+    }
 
-        .course-list li:hover {
-            background-color: #E6F3FF;
-        }
+    /* Button */
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      font-weight: 500;
+    }
 
-        .price-tag {
-            display: inline-block;
-            background-color: #1D3557;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 0;
-            font-size: 0.8em;
-            margin-left: 5px;
-            float: right;
-        }
+    .btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      transform: translateY(-2px);
+    }
 
-        .subject-info {
-            display: none;
-            padding: 15px;
-            background-color: #f8f8f8;
-            border-left: 3px solid #1D3557;
-            margin-bottom: 20px;
-        }
+    .btn-solid {
+      background: white;
+      color: var(--accent);
+      margin-left: 12px;
+    }
 
-        .subject-info.active {
-            display: block;
-        }
+    .btn-solid:hover {
+      background: rgba(255,255,255,0.9);
+    }
 
-        .back-button {
-            display: inline-block;
-            background-color: #1D3557;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.8em;
-        }
-    </style>
+    /* Card Components */
+    .card {
+      background: white;
+      border-radius: 6px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    /* Section Dividers */
+    .section-divider {
+      border-top: 1px solid var(--border);
+      margin: 5rem auto;
+      width: 80px;
+    }
+
+    /* Testimonials */
+    .testimonial {
+      font-style: normal;
+      position: relative;
+      padding: 2rem;
+      background: white;
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-quote {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      font-size: 4rem;
+      position: absolute;
+      left: -1.5rem;
+      top: -1rem;
+      color: rgba(29, 53, 87, 0.1);
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-author {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* Contact Form */
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px 0;
+      margin-bottom: 1.5rem;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+
+    .contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 3rem 0;
+      background: var(--light-gray);
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="card">
-            <div class="text-section">
-                <div class="title">Hello. My name is Abiral.</div>
-                <p class="description"></p>
-            </div>
+  <!-- Minimal Navigation -->
+  <div class="minimal-nav">
+    <div class="nav-dot active" data-section="home" data-target="hero"></div>
+    <div class="nav-dot" data-section="about" data-target="about"></div>
+    <div class="nav-dot" data-section="subjects" data-target="subjects"></div>
+    <div class="nav-dot" data-section="approach" data-target="approach"></div>
+    <div class="nav-dot" data-section="contact" data-target="contact"></div>
+  </div>
 
-            <div class="tabs">
-                <div class="tab active" onclick="showSection('tuition')">Tutoring</div>
-                <div class="tab" onclick="showSection('pricing')">Pricing</div>
-            </div>
-
-            <div id="tuition-section" class="section active">
-                <p class="description">
-                    I'll teach you stuff if u pay me.
-                </p>
-                <ul class="course-list">
-                    <li onclick="showSubject('cs')">Computer Science</li>
-                    <li onclick="showSubject('history')">History</li>
-                    <li onclick="showSubject('physics')">Physics</li>
-                    <li onclick="showSubject('chemistry')">Chemistry</li>
-                    <li onclick="showSubject('maths')">Maths</li>
-                    <li onclick="showSubject('english')">English</li>
-                </ul>
-
-                <div id="cs-info" class="subject-info">
-                    <h3>Computer Science</h3>
-                    <p>dont worry im very good at it</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-
-                <div id="history-info" class="subject-info">
-                    <h3>History</h3>
-                    <p>ill go through exam technique</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-
-                <div id="physics-info" class="subject-info">
-                    <h3>Physics</h3>
-                    <p>ill go through exam technique</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-
-                <div id="chemistry-info" class="subject-info">
-                    <h3>Chemistry</h3>
-                    <p>ill go through exam technique</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-
-                <div id="maths-info" class="subject-info">
-                    <h3>Maths</h3>
-                    <p>i can teach you whatever, if your already grade 9 i dont think i can do much for you</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-
-                <div id="english-info" class="subject-info">
-                    <h3>English</h3>
-                    <p>i can teach you whatever, if your already grade 9 i dont think i can do much for you</p>
-                    <button class="back-button" onclick="hideSubjectInfo()">Back to Subjects</button>
-                </div>
-            </div>
-
-            <div id="pricing-section" class="section">
-                <p class="description">
-                    If ur a friend I'll give you a free first session but past that you gotta pay mate.
-                </p>
-                <ul class="course-list">
-                    <li>normal <span class="price-tag">£10/hr</span></li>
-                    <li>if you convince me <span class="price-tag">£5/hr</span></li>
-                </ul>
-            </div>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>Hello.<br></h1>
+      <p>My name is Abiral Gurung, I am happy to provide a professional tutoring service for a reasonable price.</p>
+      <div>
+        <a href="#contact" class="btn">Contact</a>
+      </div>
     </div>
+  </section>
 
-    <script>
-        function showSection(sectionName) {
-            document.getElementById('tuition-section').classList.remove('active');
-            document.getElementById('pricing-section').classList.remove('active');
-            
-            document.getElementById(sectionName + '-section').classList.add('active');
-            
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            if (sectionName === 'tuition') {
-                tabs[0].classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-            }
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2>About Me</h2>
 
-            hideSubjectInfo();
+        <div class="section-divider"></div>
+
+        <h3>Who I am</h3>
+        <p> My name is Abiral Gurung, a 16-year-old who just completed his GCSEs. I'm passionate about learning and love helping others understand subjects in a simple, clear way. Throughout school, I’ve gained experience in tutoring during sessions with friends, whether it was reinforcing or expanding their knowledge. That experience sparked my interest in tutoring, and now I want to help other secondary school students feel confident in their learning too.</p>
+
+        <div class="section-divider"></div>
+        
+        <h3>My interests</h3>
+        <p>While I’ve always prioritised my education, I’ve also enjoyed getting involved in extracurricular activities and personal hobbies. I joined my local orchestra as a beginner violinist and became an active member of my school’s Combined Cadet Force (CCF). These experiences outside the classroom have been just as valuable teaching me discipline, teamwork, and the importance of steady progress through consistent effort. </p>
+        
+        <div class="section-divider"></div>
+        
+        <h3>My attainment</h3>
+        <p>I’ve consistently performed at a high level throughout secondary school, achieving a majority of Grade 9s in both my mock exams and teacher-predicted grades. Additionally, I was invited to several extracirriculars for top set students, this includes maths where I was selected to undertake GCSE Further Maths as an additional quallificaiton.</p>
+        
+        <div class="section-divider"></div>
+        
+        <h3>My experience</h3>
+        <p>Despite the fact that I have not taught professionally, I have extensive experience helping classmates and friends through one-to-one and group video sessions. I've successfully explained a wide range of topics and have helped them significantly improve their understanding and academic performance.  </p>
+        
+        <div class="section-divider"></div>
+        
+        <h3>My attitude to learning</h3>
+        <h4>Efficiency</h4>
+        <p>I believe that many students don’t struggle because they lack ability, but because their effort isn’t always focused in the right direction. In my own experience, a lot of time was wasted covering content that never came up in exams, especially when lessons didn’t align closely with what exam boards actually required. That’s why I place such a strong emphasis on efficient learning: using subject specifications to guide revision and ensuring that every minute spent studying is moving you closer to exam success.</p>
+        <h4>Improvement</h4>
+        <p>My biggest progress came when I shifted my focus to what actually helps you improve not just working harder, but working smarter. I started targeting my weaker areas directly, using mark schemes, examiners’ reports, and past papers to guide my practice. I learned that the best results come from refining exam technique and being strategic, not from trying to memorise everything in a textbook. Improvement comes from knowing where to focus and I can help students do exactly that.</p>
+      </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subjects Section -->
+  <section class="subjects" id="subjects" style="background: var(--light-gray);">
+    <div class="container">
+      <h2 style="text-align: center;">Subjects I Tutor</h2>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Subjects I've mastered and can help you with:</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card">
+          <h3>Mathematics</h3>
+          <p>All exam boards covered with focus on efficient problem-solving techniques.</p>
+        </div>
+        
+        <div class="card">
+          <h3>Sciences</h3>
+          <p>Biology, Chemistry and Physics - both Combined and Separate Sciences.</p>
+        </div>
+        
+        <div class="card">
+          <h3>English</h3>
+          <p>Language and Literature, with practical analysis techniques.</p>
+        </div>
+
+        <div class="card">
+          <h3>Computer Science</h3>
+          <p>Programming concepts and theory for all major exam boards.</p>
+        </div>
+
+        <div class="card">
+          <h3>History</h3>
+          <p>Essay structure and source analysis techniques.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section -->
+  <section class="approach" id="approach">
+    <div class="container">
+      <h2 style="text-align: center;">My Tutoring Approach</h2>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Focused on efficiency and proven results</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card">
+          <h3>Exam-Focused</h3>
+          <p>Teaching exactly what you need to know to maximize marks, cutting out unnecessary content.</p>
+        </div>
+        
+        <div class="card">
+          <h3>Active Recall</h3>
+          <p>Techniques that help you retain information better with less time spent.</p>
+        </div>
+        
+        <div class="card">
+          <h3>Practice-Based</h3>
+          <p>Focus on past papers and examiner reports rather than just theory.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <p>My goal is to help you achieve the highest grade possible with the least wasted effort.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 4rem; align-items: center;">
+        <div>
+          <h2>Get In Touch</h2>
+          <p>If you're looking for efficient and no-nonsense GCSE tutoring, reach out!</p>
+          
+          <div style="margin-top: 2rem;">
+            <h3>Pricing</h3>
+            <p style="margin: 1rem 0;">£15/hour - Online sessions via Zoom</p>
+            <p style="margin: 1rem 0;">Flexible evening and weekend hours</p>
+          </div>
+        </div>
+        
+        <div>
+          <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number">
+            <select style="width: 100%; padding: 14px 0; margin-bottom: 1.5rem; border: none; border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text);">
+              <option value="" disabled selected>Subject Needed</option>
+              <option>Mathematics</option>
+              <option>Science</option>
+              <option>English</option>
+              <option>Computer Science</option>
+              <option>History</option>
+            </select>
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit" class="btn" style="background: var(--accent); color: white; border: none; width: 100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <script>
+    // Navigation
+    const navDots = document.querySelectorAll('.nav-dot');
+    const sections = document.querySelectorAll('section');
+
+    function updateNavigation() {
+      let currentSection = '';
+      const pageHeight = window.innerHeight;
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - pageHeight/3) {
+          currentSection = section.getAttribute('id');
         }
+      });
 
-        function showSubject(subjectName) {
-            const subjectInfos = document.querySelectorAll('.subject-info');
-            subjectInfos.forEach(info => info.classList.remove('active'));
-
-            document.querySelector('.course-list').style.display = 'none';
-            
-            document.getElementById(subjectName + '-info').classList.add('active');
+      navDots.forEach(dot => {
+        dot.classList.remove('active');
+        if (dot.getAttribute('data-target') === currentSection) {
+          dot.classList.add('active');
         }
+      });
+    }
 
-        function hideSubjectInfo() {
-            const subjectInfos = document.querySelectorAll('.subject-info');
-            subjectInfos.forEach(info => info.classList.remove('active'));
-            
-            document.querySelector('.course-list').style.display = 'block';
+    navDots.forEach(dot => {
+      dot.addEventListener('click', function() {
+        const target = document.getElementById(this.getAttribute('data-target'));
+        window.scrollTo({
+          top: target.offsetTop,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    window.addEventListener('scroll', updateNavigation);
+    window.addEventListener('load', updateNavigation);
+
+    // Form Submission
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for your message. I will respond within 24 hours.');
+      form.reset();
+    });
+
+    // Animate cards on scroll
+    const cards = document.querySelectorAll('.card');
+    const animateCards = () => {
+      cards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        if (cardTop < window.innerHeight - 100) {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
         }
-    </script>
+      });
+    };
+
+    // Initialize card styles
+    cards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'all 0.6s ease';
+    });
+
+    window.addEventListener('load', animateCards);
+    window.addEventListener('scroll', animateCards);
+  </script>
 </body>
 </html>
